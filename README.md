@@ -215,3 +215,20 @@ Screenshots of verified answers are in the `screenshots/` folder.
 | `TOP_K` | — | `5` | Chunks retrieved per query |
 | `HOST` | — | `127.0.0.1` | Server host |
 | `PORT` | — | `8000` | Server port |
+
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/landing.png)
+
+### Privilege Leave Answer
+![Privilege Leave](screenshots/q1-pl.png)
+
+### Probation Period Answer
+![Probation Period](screenshots/q2-probation.png)
+
+### GST Question — Not Found
+![GST Not Found](screenshots/q4-not-found.png)
+
+### Maternity Leave Answer
+![Maternity Leave](screenshots/q5-maternity.png)
