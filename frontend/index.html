@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Policy Assistant — Enso Group</title>
+  <meta name="description"
+        content="Ask any question about the Enso Group HR policy. Evidence-grounded answers with page citations, powered by Google Gemini." />
+
+  <!-- Inter font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+
+    <!-- ── Header ─────────────────────────────────────────────── -->
+    <header class="app-header">
+      <div class="header-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+      </div>
+      <h1 class="header-title">HR Policy Assistant</h1>
+      <p class="header-subtitle">Enso Group &middot; Powered by Gemini</p>
+    </header>
+
+    <!-- ── Main content ───────────────────────────────────────── -->
+    <main class="app-main">
+
+      <!-- Question input form -->
+      <section class="question-card" aria-label="Ask a question">
+        <form id="ask-form" novalidate>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+              <input
+                id="question-input"
+                type="text"
+                name="question"
+                class="question-input"
+                placeholder="Ask an HR policy question…"
+                maxlength="500"
+                autocomplete="off"
+                autocorrect="off"
+                spellcheck="false"
+                aria-label="HR policy question"
+                aria-required="true"
+              />
+            </div>
+            <button
+              id="ask-btn"
+              type="submit"
+              class="ask-btn"
+              disabled
+              aria-label="Submit question"
+            >
+              <span class="btn-text">Ask</span>
+              <span class="btn-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div id="input-error" class="input-error" role="alert" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <!-- Response area -->
+      <section id="response-area" class="response-area" aria-live="polite">
+
+        <!-- Empty state (default) -->
+        <div id="state-empty" class="state-empty" role="status">
+          <div class="empty-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <p class="empty-title">Ask anything about Enso Group HR policies</p>
+          <p class="empty-subtitle">
+            Try: "How many days of privilege leave does an employee get?"
+          </p>
+          <div class="suggestion-chips">
+            <button class="chip" type="button" data-question="How many days of Privilege Leave does a permanent employee get per year?">Privilege Leave</button>
+            <button class="chip" type="button" data-question="What is the probation period for employees up to Senior Manager?">Probation Period</button>
+            <button class="chip" type="button" data-question="How many days of maternity leave are given?">Maternity Leave</button>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div id="state-loading" class="state-loading" hidden aria-label="Loading answer">
+          <div class="loader" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="loading-text">Searching the HR manual…</p>
+          <p id="loading-elapsed" class="loading-elapsed" aria-live="polite"></p>
+        </div>
+
+        <!-- Answer state -->
+        <div id="state-answer" class="state-answer" hidden>
+          <div class="answer-card">
+            <div class="answer-header">
+              <span class="answer-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Answer
+              </span>
+              <button id="copy-btn" class="copy-btn" title="Copy answer" aria-label="Copy answer to clipboard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+              </button>
+            </div>
+            <p id="answer-text" class="answer-text"></p>
+          </div>
+
+          <!-- Source cards -->
+          <div id="sources-section" class="sources-section">
+            <h2 class="sources-title">Source References</h2>
+            <div id="sources-grid" class="sources-grid"></div>
+          </div>
+        </div>
+
+        <!-- Not Found state -->
+        <div id="state-not-found" class="state-not-found" hidden role="status">
+          <div class="not-found-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </div>
+          <p class="not-found-title">Not found in the HR Manual</p>
+          <p class="not-found-subtitle">
+            The HR policy document doesn't contain enough information to answer this question.
+            Try rephrasing or ask a different HR policy question.
+          </p>
+        </div>
+
+        <!-- Error state -->
+        <div id="state-error" class="state-error" hidden role="alert">
+          <div class="error-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <div class="error-content">
+            <p class="error-title">Something went wrong</p>
+            <p id="error-message" class="error-message"></p>
+          </div>
+          <button id="retry-btn" class="retry-btn" type="button">Retry</button>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer class="app-footer">
+      <p>Answers are sourced exclusively from the Enso Group HR Policy Manual. &nbsp;|&nbsp; Generative AI Mid-Term Project</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

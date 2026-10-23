@@ -1,0 +1,36 @@
+# ── Secrets & config ──────────────────────────────────────────
+.env
+
+# ── HR document (confidential) ────────────────────────────────
+data/
+
+# ── ChromaDB persistent storage ───────────────────────────────
+vectorstore/
+
+# ── Python artefacts ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual environments ──────────────────────────────────────
+.venv/
+venv/
+env/
+
+# ── OS artefacts ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────────────
+.vscode/
+.idea/
+.env
+.venv/
+db/
+__pycache__/
